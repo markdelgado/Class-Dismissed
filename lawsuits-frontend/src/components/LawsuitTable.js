@@ -14,7 +14,20 @@ const LawsuitTable = () =>{
                 }
                 return response.json();
             })
-            .then(data => setLawsuits(data))
+            .then(data => {
+                    const procData = data.map(lawsuit=> {
+                    const deadlineMatch = lawsuit.deadline.match(/Claim deadline is (.+?)\.$/);
+                    const deadline = deadlineMatch ? deadlineMatch[1] : "No deadline found";
+                    const description = lawsuit.deadline.replace(/Claim deadline is .+?\.$/, "").trim();
+                    return{
+                        ...lawsuit,
+                        description,
+                        deadline
+                    };
+});
+                
+                setLawsuits(procData);
+})
             .catch(error => console.error("Error fetching data:", error));
     }, []);
    
@@ -31,7 +44,7 @@ const LawsuitTable = () =>{
            <Card style={{ width: '100%' }}>
                <Card.Body>
                    <Card.Title>{lawsuit.title}</Card.Title>
-
+                    <Card.Text>{lawsuit.description} </Card.Text>
                    <Card.Text>{lawsuit.deadline}</Card.Text>
 
 
