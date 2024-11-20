@@ -1,11 +1,13 @@
 import React, { useEffect, useState} from "react";
-import { Table } from "react-bootstrap";
+import { Table, Card, Row, Col, Container } from "react-bootstrap";
+
 
 const LawsuitTable = () =>{
+
    const [lawsuits, setLawsuits] = useState([]);
    
     useEffect(() => {
-        fetch('/lawsuits.json') // Adjusted path to go back two directories
+        fetch('/lawsuits.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -18,28 +20,32 @@ const LawsuitTable = () =>{
    
    
     return(
-        <Table striped border hover>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Defandant</th>
-                    <th>Details</th>
-                    <th>Deadline</th>
-                </tr>
-            </thead>
-            <tbody>
-                {lawsuits.map((lawsuit, index)=>(
-                    <tr key={index}>
-                        <td>{lawsuit.title}</td>                        
-                        <td>{lawsuit.defendant}</td> 
-                        <td>{lawsuit.details}</td> 
-                        <td>{lawsuit.deadline}</td> 
-                    </tr>
-                ))}
-            </tbody>
+        <Container className="my-4">
+    
 
-        </Table>
-    );
+       
+        <Row className='g-4'>
+       {lawsuits.map((lawsuit, index)=>(
+        <Col key={index} xs={12} sm={6} md={4}>
+
+           <Card style={{ width: '100%' }}>
+               <Card.Body>
+                   <Card.Title>{lawsuit.title}</Card.Title>
+
+                   <Card.Text>{lawsuit.deadline}</Card.Text>
+
+
+                   <Card.Link href="#">Another Link</Card.Link>
+               </Card.Body>
+           </Card>
+           </Col>
+       ))}
+     
+        </Row>
+        </Container>
+);
+
+ 
 }
 
 export default LawsuitTable;

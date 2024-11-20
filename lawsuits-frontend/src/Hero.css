@@ -1,0 +1,10 @@
+.hero h1{
+    text-align: center;
+    color:white
+}
+.hero p{
+    color: white;
+    padding-top: 20%;
+    padding-right: 15%;
+    padding-left: 10%;
+}
